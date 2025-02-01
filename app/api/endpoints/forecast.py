@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.schemas.forecast import ForecastRequest, ForecastResponse
 from app.crud.forecast import create_forecast, get_forecasts_by_city
 from app.core.database import get_db
-from app.services.weather import get_weather
+from app.services.weather import get_weather, get_forecast
 
 
 router = APIRouter()
@@ -24,3 +24,12 @@ def fetch_weather(city_name: str):
         raise HTTPException(status_code=400, detail=weather_data["error"])
     
     return weather_data
+
+@router.get('/5days-forecast/{city_name}')
+def fetch_forecast(city_name: str):
+    forecast_data = get_forecast(city_name)
+
+    if "error" in forecast_data:
+        raise HTTPException(status_code=400, detail=forecast_data["error"])
+    
+    return forecast_data

@@ -8,4 +8,5 @@ alembic
 requests
 scikit-learn
 pytest
+pymysql
 python-dotenv
